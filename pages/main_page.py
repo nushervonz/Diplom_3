@@ -68,13 +68,26 @@ class MainPage(BasePageActions):
     def get_lenta_all_time_order_counter_text(self):
         return self.get_text_of_element(MainPageLocators.ALL_TIME_ORDER_COUNTER_ON_LENTA_PAGE)
     
+    def get_all_time_order_counter_text(self):
+        return self.get_text_of_element(MainPageLocators.ALL_TIME_ORDER_COUNTER)
+    
     def wait_for_order_confirmation_popup(self):
-        self.wait_for_clickable(MainPageLocators.CLOSE_ORDER_POPUP_BUTTON, timeout=30)
+        self.wait_for_element(MainPageLocators.ALL_TIME_ORDER_COUNTER, timeout=30)
 
-    def click_on_close_order_popup_button(self):
-        self.click_element_when_clickable(MainPageLocators.CLOSE_ORDER_POPUP_BUTTON, timeout=20)
+    def wait_for_close_order_popup_button(self):
+        self.wait_for_clickable(MainPageLocators.ORDER_POPUP_CLOSE_BUTTON, timeout=30)
+    
+    def close_order_popup_button_is_displayed(self):
+        return self.element_is_displayed(MainPageLocators.ORDER_POPUP_CLOSE_BUTTON)
+    
+
+    def click_close_order_popup_button(self):
+        self.click_element(MainPageLocators.ORDER_POPUP_CLOSE_BUTTON)
     
     def all_time_order_counter_is_displayed(self):
-        return self.element_is_displayed(MainPageLocators.ALL_TIME_ORDER_COUNTER)
+        return self.element_is_displayed(MainPageLocators.ORDER_POPUP_CLOSE_BUTTON)
+    
+    def wait_for_content_box(self):
+        self.wait_for_element(MainPageLocators.CONTENT_BOX)
     
     

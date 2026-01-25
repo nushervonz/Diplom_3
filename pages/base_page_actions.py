@@ -15,7 +15,7 @@ class BasePageActions:
         return WebDriverWait(self.driver, timeout).until(EC.element_to_be_clickable(locator))
 
     @allure.step("Кликнуть на элемент")
-    def click_element(self, locator, timeout=15):
+    def click_element(self, locator, timeout=10):
         element = self.wait_for_element(locator, timeout)
         element.click()
 

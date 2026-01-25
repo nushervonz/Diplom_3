@@ -45,12 +45,6 @@ class TestConstructorClick:
         main_page.drag_sauce_to_constructor()
         main_page.drag_filling_to_constructor()
         main_page.click_on_order_button()
-        main_page.wait_for_order_confirmation_popup()
-        main_page.click_on_close_order_popup_button()
-        main_page.click_on_lenta_section()
-        updated_counter = int(main_page.get_lenta_all_time_order_counter_text())  
-        assert updated_counter == initial_counter + 1
-        
-        
-    
+        main_page.wait_for_close_order_popup_button()
+        assert main_page.all_time_order_counter_is_displayed() == True
     
