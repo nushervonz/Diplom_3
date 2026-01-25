@@ -1,37 +1,43 @@
+import allure
 from url import main_site
 from pages.main_page import MainPage
 from locators import MainPageLocators
 from data import UserData
 class TestConstructorClick:
     
+    @allure.title("Тест переход по клику на «Конструктор»")
     def test_click_on_constructor_section_by_text(self, driver):
         main_page = MainPage(driver)
         main_page.click_on_lenta_section()
         main_page.click_on_constructor_section()
         assert main_page.get_burger_inscription_text() == "Соберите бургер"
 
-    
+    @allure.title("Тест переход по клику на раздел «Лента заказов»")
     def test_lenta_section_by_url(self, driver):
         main_page = MainPage(driver)
         main_page.click_on_lenta_section()
         assert main_page.get_current_url() == main_site + "feed"
     
+    @allure.title("Тест открытия всплывающего окна по клику на ингредиент")    
     def test_ingredient_click_opens_popup(self, driver):
         main_page = MainPage(driver)
         main_page.click_on_ingredient_icon()
         assert main_page.ingredient_popup_is_displayed() == True
     
+    @allure.title("Тест закрытия всплывающего окна ингредиента")
     def test_close_ingredient_popup(self, driver):
         main_page = MainPage(driver)
         main_page.click_on_ingredient_icon()
         main_page.close_ingredient_popup()
         assert main_page.get_burger_inscription_text() == "Соберите бургер"
     
+    @allure.title("Тест перетаскивания ингредиента в конструктор")
     def test_drag_and_drop_ingredient(self, driver):
         main_page = MainPage(driver)
         main_page.drag_and_drop_ingredient()
         assert main_page.get_ingredient_counter_text() == "1"
     
+    @allure.title("Тест увеличения счётчика заказов при создании нового заказа")
     def test_new_order_increases_order_counter(self, driver):
         main_page = MainPage(driver)
         main_page.click_on_lenta_section()
