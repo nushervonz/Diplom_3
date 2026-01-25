@@ -16,6 +16,16 @@ class BasePageActions:
         element = self.wait_for_element(locator, timeout)
         element.click()
 
+    @allure.step("Проверить, что элемент отображается")
+    def element_is_displayed(self, locator, timeout=10):
+        element = self.wait_for_element(locator, timeout)
+        return element.is_displayed()
+
     @allure.step("Получить текущий URL страницы")
     def get_current_url(self):
         return self.driver.current_url
+    
+    @allure.step("Получить текст элемента")
+    def get_text_of_element(self, locator, timeout=15):
+        element = self.wait_for_element(locator, timeout)
+        return element.text
