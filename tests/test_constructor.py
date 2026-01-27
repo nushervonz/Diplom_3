@@ -51,6 +51,72 @@ class TestConstructorClick:
         main_page.drag_sauce_to_constructor()
         main_page.drag_filling_to_constructor()
         main_page.click_on_order_button()
-        main_page.wait_for_close_order_popup_button()
-        assert main_page.all_time_order_counter_is_displayed() == True
+        main_page.wait_until_popup_counter_text_is_not_9999(str(9999))
+        increased_counter = int(main_page.get_popup_counter_text())
+        assert increased_counter == initial_counter + 1
+
+    def test_new_order_increases_order_counter_from_lenta_page(self, driver):
+        main_page = MainPage(driver)
+        main_page.click_on_lenta_section()
+        initial_counter = int(main_page.get_lenta_all_time_order_counter_text())
+        main_page.click_on_constructor_section()
+        main_page.click_on_user_account_button()
+        main_page.fill_email_field(UserData.existing_user_email)
+        main_page.fill_password_field(UserData.existing_user_password)
+        main_page.click_on_enter_button()
+        main_page.drag_bun_to_constructor()
+        main_page.drag_sauce_to_constructor()
+        main_page.drag_filling_to_constructor()
+        main_page.click_on_order_button()
+        main_page.wait_until_popup_counter_text_is_not_9999(str(9999))
+        main_page.click_close_order_popup_button()
+        main_page.wait_for_lenta_section()
+        main_page.click_on_lenta_section()
+        main_page.wait_for_lenta_all_time_order_counter_text()
+        increased_counter = int(main_page.get_lenta_all_time_order_counter_text())
+        assert increased_counter == initial_counter + 1
+    
+    def test_today_order_counter_increases_with_new_order(self, driver):
+        main_page = MainPage(driver)
+        main_page.click_on_lenta_section()
+        initial_counter = int(main_page.get_today_order_counter_text())
+        main_page.click_on_constructor_section()
+        main_page.click_on_user_account_button()
+        main_page.fill_email_field(UserData.existing_user_email)
+        main_page.fill_password_field(UserData.existing_user_password)
+        main_page.click_on_enter_button()
+        main_page.drag_bun_to_constructor()
+        main_page.drag_sauce_to_constructor()
+        main_page.drag_filling_to_constructor()
+        main_page.click_on_order_button()
+        main_page.wait_until_popup_counter_text_is_not_9999(str(9999))
+        main_page.click_close_order_popup_button()
+        main_page.wait_for_lenta_section()
+        main_page.click_on_lenta_section()
+        main_page.wait_for_lenta_all_time_order_counter_text()
+        increased_counter = int(main_page.get_today_order_counter_text())
+        assert increased_counter == initial_counter + 1
+    
+    def test_in_progress_tab_text(self, driver):
+        main_page = MainPage(driver)
+        main_page.click_on_constructor_section()
+        main_page.click_on_user_account_button()
+        main_page.fill_email_field(UserData.existing_user_email)
+        main_page.fill_password_field(UserData.existing_user_password)
+        main_page.click_on_enter_button()
+        main_page.drag_bun_to_constructor()
+        main_page.drag_sauce_to_constructor()
+        main_page.drag_filling_to_constructor()
+        main_page.click_on_order_button()
+        main_page.wait_until_popup_counter_text_is_not_9999(str(9999))
+        order_numer = main_page.get_popup_counter_text()
+        main_page.click_close_order_popup_button()
+        main_page.wait_for_lenta_section()
+        main_page.click_on_lenta_section()
+        main_page.wait_until_tab_text_changes("Все текущие заказы готовы!")
+        tab_number = main_page.get_in_progress_tab_text()
+        assert order_numer in tab_number
+        
+             
+
     

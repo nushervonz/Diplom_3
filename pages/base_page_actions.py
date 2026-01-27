@@ -11,7 +11,7 @@ class BasePageActions:
         return WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located(locator))
 
     @allure.step("Подождать, пока элемент будет кликабелен")
-    def wait_for_clickable(self, locator, timeout=10):
+    def wait_for_clickable(self, locator, timeout=20):
         return WebDriverWait(self.driver, timeout).until(EC.element_to_be_clickable(locator))
 
     @allure.step("Кликнуть на элемент")
@@ -50,6 +50,13 @@ class BasePageActions:
     def scroll_to_element(self, locator, timeout=10):
         element = self.wait_for_element(locator, timeout)
         self.driver.execute_script("arguments[0].scrollIntoView();", element)
+    
+    def wait_until_text_changes(self, locator, previous_text, timeout=20):
+        WebDriverWait(self.driver, timeout).until(
+            lambda driver: self.get_text_of_element(locator) != previous_text
+        )
+    
+
      
     
 

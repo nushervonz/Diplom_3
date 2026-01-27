@@ -105,12 +105,28 @@ class MainPage(BasePageActions):
     def click_close_order_popup_button(self):
         self.click_element(MainPageLocators.ORDER_POPUP_CLOSE_BUTTON)
     
-    @allure.step("Проверить, что общий счётчик заказов отображается")
-    def all_time_order_counter_is_displayed(self):
-        return self.element_is_displayed(MainPageLocators.ORDER_POPUP_CLOSE_BUTTON)
     
-    @allure.step("Подождать появления контентной области")
-    def wait_for_content_box(self):
-        self.wait_for_element(MainPageLocators.CONTENT_BOX)
+    def wait_for_close_order_popup_button_clickable(self):
+        self.wait_for_clickable(MainPageLocators.ORDER_POPUP_CLOSE_BUTTON, timeout=20)
     
+    def wait_for_lenta_section(self):
+        self.wait_for_element(MainPageLocators.LENTA_SECTION, timeout=20)
+    
+    def wait_for_lenta_all_time_order_counter_text(self):
+        self.wait_for_element(MainPageLocators.ALL_TIME_ORDER_COUNTER_ON_LENTA_PAGE, timeout=20)
+    
+    def get_popup_counter_text(self):
+        return self.get_text_of_element(MainPageLocators.POPUP_COUNTER)
+    
+    def wait_until_popup_counter_text_is_not_9999(self, previous_text):
+        self.wait_until_text_changes(MainPageLocators.POPUP_COUNTER, previous_text, timeout=30)
+    
+    def wait_until_tab_text_changes(self, previous_text):
+        self.wait_until_text_changes(MainPageLocators.IN_PROGRESS_TAB, previous_text, timeout=20)
+
+    def get_today_order_counter_text(self):
+        return self.get_text_of_element(MainPageLocators.TODAY_ORDER_COUNTER)
+    
+    def get_in_progress_tab_text(self):
+        return self.get_text_of_element(MainPageLocators.IN_PROGRESS_TAB)
     

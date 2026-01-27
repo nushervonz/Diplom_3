@@ -22,5 +22,8 @@ class MainPageLocators:
     FILLING_ICON = (By.XPATH, ".//div/main/section[1]/div[2]/ul[3]/a[3]/img")
     ALL_TIME_ORDER_COUNTER = (By.XPATH, "//div/section/div[1]/div/h2") 
     ALL_TIME_ORDER_COUNTER_ON_LENTA_PAGE = (By.XPATH, ".//div/main/div/div/div/div[2]/p[2]")    
+    TODAY_ORDER_COUNTER = (By.XPATH, ".//div[3]/p[2]")
+    POPUP_COUNTER = (By.XPATH, "//div/section/div[1]/div/h2")
     ORDER_POPUP_CLOSE_BUTTON = (By.XPATH, ".//div/section/div[1]/button")
     CONTENT_BOX = (By.XPATH, ".//div/section/div[1]/div")
+    IN_PROGRESS_TAB = (By.XPATH, ".//ul[2]/li")
