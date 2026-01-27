@@ -8,10 +8,6 @@ class MainPage(BasePageActions):
     def click_on_constructor_section(self):
         self.click_element(MainPageLocators.CONSTRUCTOR_SECTION)
     
-    @allure.step("Проверить, что на главной странице")
-    def is_on_main_page(self, url):
-        return self.get_current_url() == url
-    
     @allure.step("Кликнуть на секцию Лента заказов")
     def click_on_lenta_section(self):
         self.click_element(MainPageLocators.LENTA_SECTION)
@@ -20,9 +16,6 @@ class MainPage(BasePageActions):
     def get_burger_inscription_text(self):
         return self.get_text_of_element(MainPageLocators.BURGER_INSCRIPTION)
     
-    @allure.step("Получить текст надписи 'Лента заказов'")
-    def get_lenta_inscription_text(self):
-        return self.get_text_of_element(MainPageLocators.LENTA_INSCRIPTION)
     
     @allure.step("Кликнуть на иконку ингредиента")
     def click_on_ingredient_icon(self):
@@ -60,10 +53,6 @@ class MainPage(BasePageActions):
     def click_on_enter_button(self):
         self.click_element(MainPageLocators.ENTER_BUTTON)
     
-    @allure.step("Кликнуть на кнопку Оформить заказ")
-    def oreder_button_click(self):
-        self.click_element(MainPageLocators.ORDER_BUTTON)
-    
     @allure.step("Перетащить булку в конструктор")
     def drag_bun_to_constructor(self):
         self.drag_and_drop(MainPageLocators.BUN_ICON, MainPageLocators.DROP_TO_CONSTRUCOR)
@@ -85,48 +74,35 @@ class MainPage(BasePageActions):
     def get_lenta_all_time_order_counter_text(self):
         return self.get_text_of_element(MainPageLocators.ALL_TIME_ORDER_COUNTER_ON_LENTA_PAGE)
     
-    @allure.step("Получить текст общего счётчика заказов")
-    def get_all_time_order_counter_text(self):
-        return self.get_text_of_element(MainPageLocators.ALL_TIME_ORDER_COUNTER)
-    
-    @allure.step("Подождать появления всплывающего окна подтверждения заказа")
-    def wait_for_order_confirmation_popup(self):
-        self.wait_for_element(MainPageLocators.ALL_TIME_ORDER_COUNTER, timeout=30)
-
-    @allure.step("Подождать появления кнопки закрытия окна заказа")
-    def wait_for_close_order_popup_button(self):
-        self.wait_for_clickable(MainPageLocators.ORDER_POPUP_CLOSE_BUTTON, timeout=30)
-    
-    @allure.step("Проверить, что кнопка закрытия окна заказа отображается")
-    def close_order_popup_button_is_displayed(self):
-        return self.element_is_displayed(MainPageLocators.ORDER_POPUP_CLOSE_BUTTON)
-    
     @allure.step("Кликнуть на кнопку закрытия окна заказа")
     def click_close_order_popup_button(self):
         self.click_element(MainPageLocators.ORDER_POPUP_CLOSE_BUTTON)
     
-    
-    def wait_for_close_order_popup_button_clickable(self):
-        self.wait_for_clickable(MainPageLocators.ORDER_POPUP_CLOSE_BUTTON, timeout=20)
-    
+    @allure.step("Подождать секцию Лента заказов")
     def wait_for_lenta_section(self):
         self.wait_for_element(MainPageLocators.LENTA_SECTION, timeout=20)
     
+    @allure.step("Подождать счётчик «Выполнено за всё время» на странице Лента заказов")
     def wait_for_lenta_all_time_order_counter_text(self):
         self.wait_for_element(MainPageLocators.ALL_TIME_ORDER_COUNTER_ON_LENTA_PAGE, timeout=20)
     
+    @allure.step("Получить текст счётчика «Выполнено за всё время» во всплывающем окне")
     def get_popup_counter_text(self):
         return self.get_text_of_element(MainPageLocators.POPUP_COUNTER)
     
+    @allure.step("Подождать изменения текста во всплывающем окне, пока он не станет отличен от 9999")
     def wait_until_popup_counter_text_is_not_9999(self, previous_text):
         self.wait_until_text_changes(MainPageLocators.POPUP_COUNTER, previous_text, timeout=30)
     
+    @allure.step("Подождать изменения текста табло 'В работе'")
     def wait_until_tab_text_changes(self, previous_text):
         self.wait_until_text_changes(MainPageLocators.IN_PROGRESS_TAB, previous_text, timeout=20)
-
+    
+    @allure.step("Получить текст счётчика 'Выполнено за сегодня'")
     def get_today_order_counter_text(self):
         return self.get_text_of_element(MainPageLocators.TODAY_ORDER_COUNTER)
     
+    @allure.step("Получить текст табло 'В работе'")
     def get_in_progress_tab_text(self):
         return self.get_text_of_element(MainPageLocators.IN_PROGRESS_TAB)
     

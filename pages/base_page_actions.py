@@ -19,10 +19,6 @@ class BasePageActions:
         element = self.wait_for_element(locator, timeout)
         element.click()
 
-    def click_element_when_clickable(self, locator, timeout=10):
-        element = self.wait_for_clickable(locator, timeout)
-        element.click()
-
     @allure.step("Проверить, что элемент отображается")
     def element_is_displayed(self, locator, timeout=10):
         element = self.wait_for_element(locator, timeout)
@@ -37,20 +33,24 @@ class BasePageActions:
         element = self.wait_for_element(locator, timeout)
         return element.text
     
+    @allure.step("Перетащить элемент из одного места в другое")
     def drag_and_drop(self, source_locator, target_locator):
         source = self.wait_for_element(source_locator)
         target = self.wait_for_element(target_locator)
         ActionChains(self.driver).drag_and_drop(source, target).perform()
     
+    @allure.step("Отправить текст в поле ввода")
     def send_keys_to_input(self, locator, keys, timeout=10):
         element = self.wait_for_element(locator, timeout)
         element.clear()
         element.send_keys(keys)
     
+    @allure.step("Прокрутить страницу до элемента")
     def scroll_to_element(self, locator, timeout=10):
         element = self.wait_for_element(locator, timeout)
         self.driver.execute_script("arguments[0].scrollIntoView();", element)
     
+    @allure.step("Подождать, пока текст элемента изменится")
     def wait_until_text_changes(self, locator, previous_text, timeout=20):
         WebDriverWait(self.driver, timeout).until(
             lambda driver: self.get_text_of_element(locator) != previous_text

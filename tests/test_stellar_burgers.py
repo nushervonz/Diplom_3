@@ -1,5 +1,5 @@
 import allure
-from url import main_site
+from url import main_site , lenta_page
 from pages.main_page import MainPage
 from locators import MainPageLocators
 from data import UserData
@@ -17,7 +17,7 @@ class TestMainFunctionalities:
     def test_lenta_section_by_url(self, driver):
         main_page = MainPage(driver)
         main_page.click_on_lenta_section()
-        assert main_page.get_current_url() == main_site + "feed"
+        assert main_page.get_current_url() == lenta_page
     
     @allure.title("Тест открытия всплывающего окна по клику на ингредиент")    
     def test_ingredient_click_opens_popup(self, driver):
@@ -38,7 +38,11 @@ class TestMainFunctionalities:
         main_page.drag_and_drop_ingredient()
         assert main_page.get_ingredient_counter_text() == "1"
 
-
+    def test_drag_and_drop_same_ingredient_multiple_times(self, driver):
+        main_page = MainPage(driver)
+        for i in range(3):
+            main_page.drag_and_drop_ingredient()
+        assert main_page.get_ingredient_counter_text() == "3"
 
 class TestOrderCounters:
 
