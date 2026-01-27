@@ -33,6 +33,10 @@ class MainPage(BasePageActions):
     def drag_and_drop_ingredient(self):
         self.drag_and_drop(MainPageLocators.DRAG_FROM_SAUSE, MainPageLocators.DROP_TO_CONSTRUCOR)
     
+    @allure.step("Перетащить ингредиент в конструктор (Firefox)")
+    def drag_and_drop_ingredient_firefox(self):
+        self.drag_and_drop_firefox(MainPageLocators.DRAG_FROM_SAUSE, MainPageLocators.DROP_TO_CONSTRUCOR)
+    
     @allure.step("Получить текст счётчика ингредиента")
     def get_ingredient_counter_text(self):
         return self.get_text_of_element(MainPageLocators.COUNTER)
@@ -57,15 +61,28 @@ class MainPage(BasePageActions):
     def drag_bun_to_constructor(self):
         self.drag_and_drop(MainPageLocators.BUN_ICON, MainPageLocators.DROP_TO_CONSTRUCOR)
     
+    @allure.step("Перетащить булку в конструктор (Firefox)")
+    def drag_bun_to_constructor_firefox(self):
+        self.drag_and_drop_firefox(MainPageLocators.BUN_ICON, MainPageLocators.DROP_TO_CONSTRUCOR)
+    
     @allure.step("Перетащить соус в конструктор")
     def drag_sauce_to_constructor(self):
         self.drag_and_drop(MainPageLocators.SAUCE_ICON, MainPageLocators.DROP_TO_CONSTRUCOR)
+    
+    @allure.step("Перетащить соус в конструктор (Firefox)")
+    def drag_sauce_to_constructor_firefox(self):
+        self.drag_and_drop_firefox(MainPageLocators.SAUCE_ICON, MainPageLocators.DROP_TO_CONSTRUCOR)
     
     @allure.step("Перетащить начинку в конструктор")
     def drag_filling_to_constructor(self):
         self.scroll_to_element(MainPageLocators.FILLING_ICON)
         self.drag_and_drop(MainPageLocators.FILLING_ICON, MainPageLocators.DROP_TO_CONSTRUCOR)
     
+    @allure.step("Перетащить начинку в конструктор (Firefox)")
+    def drag_filling_to_constructor_firefox(self):
+        self.scroll_to_element(MainPageLocators.FILLING_ICON)
+        self.drag_and_drop_firefox(MainPageLocators.FILLING_ICON, MainPageLocators.DROP_TO_CONSTRUCOR)
+
     @allure.step("Кликнуть на кнопку Оформить заказ")
     def click_on_order_button(self):
         self.click_element(MainPageLocators.ORDER_BUTTON)

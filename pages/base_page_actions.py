@@ -39,6 +39,29 @@ class BasePageActions:
         target = self.wait_for_element(target_locator)
         ActionChains(self.driver).drag_and_drop(source, target).perform()
     
+    def drag_and_drop_firefox(self, source_locator, target_locator):
+        source = self.wait_for_element(source_locator)
+        target = self.wait_for_element(target_locator)        
+        js = """
+        var src = arguments[0], dest = arguments[1];
+        var dataTransfer = { data: {}, setData: function(k,v){this.data[k]=v}, getData: function(k){return this.data[k]} };
+        function fire(node, type) {
+            var evt = document.createEvent('CustomEvent');
+            evt.initCustomEvent(type, true, true, null);
+            evt.dataTransfer = dataTransfer;
+            node.dispatchEvent(evt);
+        }
+        fire(src, 'dragstart');
+        fire(dest, 'dragenter');
+        fire(dest, 'dragover');
+        fire(dest, 'drop');
+        fire(src, 'dragend');
+        """
+        try:
+            self.driver.execute_script(js, source, target)
+        except Exception:            
+            ActionChains(self.driver).drag_and_drop(source, target).perform()
+        
     @allure.step("Отправить текст в поле ввода")
     def send_keys_to_input(self, locator, keys, timeout=10):
         element = self.wait_for_element(locator, timeout)
