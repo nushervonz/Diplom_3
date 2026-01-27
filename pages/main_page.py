@@ -12,6 +12,10 @@ class MainPage(BasePageActions):
     def click_on_lenta_section(self):
         self.click_element(MainPageLocators.LENTA_SECTION)
     
+    @allure.step("Кликнуть на секцию Лента заказов (Firefox)")
+    def click_on_lenta_section_firefox(self):
+        self.click_element_firefox(MainPageLocators.LENTA_SECTION)
+    
     @allure.step("Получить текст надписи 'Соберите бургер'")
     def get_burger_inscription_text(self):
         return self.get_text_of_element(MainPageLocators.BURGER_INSCRIPTION)
@@ -94,10 +98,6 @@ class MainPage(BasePageActions):
     @allure.step("Кликнуть на кнопку закрытия окна заказа")
     def click_close_order_popup_button(self):
         self.click_element(MainPageLocators.ORDER_POPUP_CLOSE_BUTTON)
-    
-    @allure.step("Подождать секцию Лента заказов")
-    def wait_for_lenta_section(self):
-        self.wait_for_element(MainPageLocators.LENTA_SECTION, timeout=20)
     
     @allure.step("Подождать счётчик «Выполнено за всё время» на странице Лента заказов")
     def wait_for_lenta_all_time_order_counter_text(self):

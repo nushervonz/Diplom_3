@@ -2,6 +2,10 @@ import allure
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver import ActionChains
+from selenium.common.exceptions import StaleElementReferenceException, ElementClickInterceptedException, WebDriverException
+import time
+
+
 class BasePageActions:
     def __init__(self, driver):
         self.driver = driver
@@ -18,6 +22,26 @@ class BasePageActions:
     def click_element(self, locator, timeout=10):
         element = self.wait_for_element(locator, timeout)
         element.click()
+    
+    @allure.step("Кликнуть на элемент (Firefox)")
+    def click_element_firefox(self, locator, timeout=10):
+        attempts = 3
+        for attempt in range(1, attempts + 1):
+            try:
+                element = self.wait_for_clickable(locator, timeout)
+                element.click()
+                return
+            except (StaleElementReferenceException, ElementClickInterceptedException, WebDriverException):
+                if attempt == attempts:
+                    try:
+                        
+                        el = self.wait_for_element(locator, timeout)
+                        self.driver.execute_script("arguments[0].click();", el)
+                        return
+                    except Exception:
+                        raise
+                time.sleep(0.5)
+
 
     @allure.step("Проверить, что элемент отображается")
     def element_is_displayed(self, locator, timeout=10):
@@ -39,23 +63,31 @@ class BasePageActions:
         target = self.wait_for_element(target_locator)
         ActionChains(self.driver).drag_and_drop(source, target).perform()
     
+    @allure.step("Перетащить элемент из одного места в другое (Firefox)")
     def drag_and_drop_firefox(self, source_locator, target_locator):
         source = self.wait_for_element(source_locator)
         target = self.wait_for_element(target_locator)        
         js = """
         var src = arguments[0], dest = arguments[1];
-        var dataTransfer = { data: {}, setData: function(k,v){this.data[k]=v}, getData: function(k){return this.data[k]} };
-        function fire(node, type) {
-            var evt = document.createEvent('CustomEvent');
-            evt.initCustomEvent(type, true, true, null);
-            evt.dataTransfer = dataTransfer;
-            node.dispatchEvent(evt);
+        var dataTransfer = null;
+        try { dataTransfer = new DataTransfer(); } catch(e) {
+            dataTransfer = { data: {}, setData: function(k,v){this.data[k]=v}, getData: function(k){return this.data[k]} };
         }
-        fire(src, 'dragstart');
-        fire(dest, 'dragenter');
-        fire(dest, 'dragover');
-        fire(dest, 'drop');
-        fire(src, 'dragend');
+        function createEvent(type) {
+            try {
+                return new DragEvent(type, { bubbles: true, cancelable: true, dataTransfer: dataTransfer });
+            } catch (e) {
+                var evt = document.createEvent('CustomEvent');
+                evt.initCustomEvent(type, true, true, null);
+                evt.dataTransfer = dataTransfer;
+                return evt;
+            }
+        }
+        src.dispatchEvent(createEvent('dragstart'));
+        dest.dispatchEvent(createEvent('dragenter'));
+        dest.dispatchEvent(createEvent('dragover'));
+        dest.dispatchEvent(createEvent('drop'));
+        src.dispatchEvent(createEvent('dragend'));
         """
         try:
             self.driver.execute_script(js, source, target)

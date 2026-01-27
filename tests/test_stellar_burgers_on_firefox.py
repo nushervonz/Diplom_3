@@ -49,7 +49,7 @@ class TestOrderCounters:
     @allure.title("Тест увеличения счётчика «Выполнено за всё время» при создании нового заказа")
     def test_new_order_increases_order_counter_from_lenta_page(self, driver_firefox):
         main_page = MainPage(driver_firefox)
-        main_page.click_on_lenta_section()
+        main_page.click_on_lenta_section_firefox()
         initial_counter = int(main_page.get_lenta_all_time_order_counter_text())
         main_page.click_on_constructor_section()
         main_page.click_on_user_account_button()
@@ -62,8 +62,7 @@ class TestOrderCounters:
         main_page.click_on_order_button()
         main_page.wait_until_popup_counter_text_is_not_9999(str(9999))
         main_page.click_close_order_popup_button()
-        main_page.wait_for_lenta_section()
-        main_page.click_on_lenta_section()
+        main_page.click_on_lenta_section_firefox()
         main_page.wait_for_lenta_all_time_order_counter_text()
         increased_counter = int(main_page.get_lenta_all_time_order_counter_text())
         assert increased_counter == initial_counter + 1
@@ -72,7 +71,7 @@ class TestOrderCounters:
     @allure.title("Тест увеличения счётчика «Выполнено за всё время» при создании нового заказа (сравнение из счетчика всплывающего окна)")
     def test_new_order_increases_order_counter(self, driver_firefox):
         main_page = MainPage(driver_firefox)
-        main_page.click_on_lenta_section()
+        main_page.click_on_lenta_section_firefox()
         initial_counter = int(main_page.get_lenta_all_time_order_counter_text())
         main_page.click_on_constructor_section()
         main_page.click_on_user_account_button()
@@ -91,7 +90,7 @@ class TestOrderCounters:
     @allure.title("Тест увеличения счётчика «Выполнено за сегодня» при создании нового заказа")    
     def test_today_order_counter_increases_with_new_order(self, driver_firefox):
         main_page = MainPage(driver_firefox)
-        main_page.click_on_lenta_section()
+        main_page.click_on_lenta_section_firefox()
         initial_counter = int(main_page.get_today_order_counter_text())
         main_page.click_on_constructor_section()
         main_page.click_on_user_account_button()
@@ -104,8 +103,7 @@ class TestOrderCounters:
         main_page.click_on_order_button()
         main_page.wait_until_popup_counter_text_is_not_9999(str(9999))
         main_page.click_close_order_popup_button()
-        main_page.wait_for_lenta_section()
-        main_page.click_on_lenta_section()
+        main_page.click_on_lenta_section_firefox()
         main_page.wait_for_lenta_all_time_order_counter_text()
         increased_counter = int(main_page.get_today_order_counter_text())
         assert increased_counter == initial_counter + 1
@@ -125,8 +123,7 @@ class TestOrderCounters:
         main_page.wait_until_popup_counter_text_is_not_9999(str(9999))
         order_numer = main_page.get_popup_counter_text()
         main_page.click_close_order_popup_button()
-        main_page.wait_for_lenta_section()
-        main_page.click_on_lenta_section()
+        main_page.click_on_lenta_section_firefox()
         main_page.wait_until_tab_text_changes("Все текущие заказы готовы!")
         tab_number = main_page.get_in_progress_tab_text()
         assert order_numer in tab_number
