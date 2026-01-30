@@ -1,6 +1,5 @@
 import pytest
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from url import main_site
@@ -8,8 +7,7 @@ from url import main_site
 def driver():
     options = Options()
     options.add_argument("--window-size=1920,1080")
-    service = Service(r"C:\Users\nushe\Downloads\chromedriver-win64\chromedriver-win64\chromedriver.exe")
-    browser = webdriver.Chrome(service=service, options=options)
+    browser = webdriver.Chrome(options=options)
     browser.get(main_site)
     yield browser
     browser.quit()
